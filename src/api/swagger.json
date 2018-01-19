@@ -26,63 +26,87 @@
     "tags": [
         {
             "name": "User"
+        },
+        {
+            "name": "Security"
         }
     ],
     "paths": {
-        "/info": {
-            "get": {
+        "/login": {
+            "post": {
                 "tags": [
-                    "Info"
+                    "Security"
                 ],
-                "summary": "Show API information",
-                "description": "This is a public route",
-                "operationId": "showApiInfo",
-                "responses": {
-                    "200": {
-                        "description": "ok"
-                    }
-                }
-            }
-        },
-        "/users": {
-            "get": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "List all users",
-                "description": "Returns all users",
-                "operationId": "FindAllUsers",
-                "security": [
+                "summary": "Login",
+                "description": "",
+                "operationId": "Login",
+                "security": [],
+                "parameters": [
                     {
-                        "JWT": []
+                        "in": "body",
+                        "name": "body",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Credentials"
+                        }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "ok",
+                    "201": {
+                        "description": "created",
                         "schema": {
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "string"
                                 },
                                 "message": {
                                     "type": "string"
                                 },
                                 "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/User"
-                                    }
+                                    "$ref": "#/definitions/refresh"
                                 }
                             }
                         }
                     }
                 }
-            },
+            }
+        },
+        "/refresh": {
             "post": {
                 "tags": [
-                    "User"
+                    "Security"
+                ],
+                "summary": "Refresh token",
+                "description": "",
+                "operationId": "RefreshToken",
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/newRefresh"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "schema": {
+                            "$ref": "#/definitions/refresh"
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Security"
                 ],
                 "summary": "Create new user",
                 "description": "",
@@ -110,13 +134,51 @@
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "string"
                                 },
                                 "message": {
                                     "type": "string"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/User"
+                                    "$ref": "#/definitions/refresh"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "List all users",
+                "description": "Returns all users",
+                "operationId": "FindAllUsers",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/User"
+                                    }
                                 }
                             }
                         }
@@ -143,8 +205,7 @@
                         "in": "path",
                         "description": "ID of user to return",
                         "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -154,7 +215,7 @@
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "string"
                                 },
                                 "message": {
                                     "type": "string"
@@ -185,8 +246,7 @@
                         "in": "path",
                         "description": "ID of user to update",
                         "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     },
                     {
                         "in": "body",
@@ -205,7 +265,7 @@
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "string"
                                 },
                                 "message": {
                                     "type": "string"
@@ -236,8 +296,7 @@
                         "in": "path",
                         "description": "ID of user to delete",
                         "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -247,7 +306,7 @@
                             "type": "object",
                             "properties": {
                                 "success": {
-                                    "type": "boolean"
+                                    "type": "string"
                                 },
                                 "message": {
                                     "type": "string"
@@ -260,9 +319,42 @@
         }
     },
     "definitions": {
+        "newRefresh": {
+            "type": "object",
+            "properties": {
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "refresh": {
+            "type": "object",
+            "properties": {
+                "refresh_token": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "Credentials": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "NewUser": {
             "type": "object",
             "properties": {
+                "username": {
+                    "type": "string"
+                },
                 "firstName": {
                     "type": "string"
                 },
@@ -272,7 +364,7 @@
                 "email": {
                     "type": "string"
                 },
-                "picture": {
+                "password": {
                     "type": "string"
                 }
             }

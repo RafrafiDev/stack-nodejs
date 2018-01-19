@@ -1,9 +1,7 @@
-import { JsonController, Get, Post, Put, Param, Delete, Body, OnUndefined, Authorized, CurrentUser } from 'routing-controllers';
+import {JsonController, Get, Post, Put, Param, Delete, Body, Authorized, CurrentUser} from 'routing-controllers';
 import { UserService } from '../services/UserService';
 import { User } from '../models/User';
-import { UserNotFoundError } from '../errors/UserNotFoundError';
-import {ObjectID} from 'typeorm';
-
+import {HttpCodes, HttpResponse} from '../http';
 
 @Authorized()
 @JsonController('/users')
@@ -14,14 +12,15 @@ export class UserController {
     ) { }
 
     @Get()
-    public find( @CurrentUser() user?: User): Promise<User[]> {
-        return this.userService.find();
+    public async find( @CurrentUser() user?: User): Promise<HttpResponse> {
+        const users = await this.userService.find();
+        return new HttpResponse({users});
     }
 
     @Get('/:id')
-    @OnUndefined(UserNotFoundError)
-    public one( @Param('id') id: ObjectID): Promise<User | undefined> {
-        return this.userService.findOne(id);
+    public async one( @Param('id') id: string): Promise<HttpResponse> {
+        const user = await this.userService.findOneById(id);
+        return new HttpResponse({user});
     }
 
     @Post()
@@ -29,14 +28,15 @@ export class UserController {
         return this.userService.create(user);
     }
 
+    // @HttpCode(HttpCodes.HTTP_NO_CONTENT)
     @Put('/:id')
-    public update( @Param('id') id: ObjectID, @Body() user: User): Promise<User> {
-        return this.userService.update(id, user);
+    public async update( @Param('id') id: string, @Body() user: User): Promise<HttpResponse> {
+        const updatedUser = await this.userService.update(id, user);
+        return new HttpResponse(updatedUser, HttpCodes.HTTP_NO_CONTENT);
     }
 
     @Delete('/:id')
-    public delete( @Param('id') id: ObjectID): Promise<void> {
+    public delete( @Param('id') id: string): Promise<void> {
         return this.userService.delete(id);
     }
-
 }

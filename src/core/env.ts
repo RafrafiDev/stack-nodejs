@@ -26,7 +26,10 @@ export const env = {
         dirs: {
             migrations: [path.relative(path.join(process.cwd()), path.join(__dirname, '..', 'database/migrations/*.ts'))],
             migrationsDir: path.relative(path.join(process.cwd()), path.join(__dirname, '..', 'database/migrations')),
-            entities: [path.relative(path.join(process.cwd()), path.join(__dirname, '..', 'api/**/models/*{.js,.ts}'))],
+            entities: [
+                path.relative(path.join(process.cwd()), path.join(__dirname, '..', 'api/**/models/*{.js,.ts}')),
+                path.relative(path.join(process.cwd()), path.join(__dirname, '..', 'auth/**/models/*{.js,.ts}')),
+            ],
             subscribers: [path.join(__dirname, '..', 'api/**/*Subscriber{.js,.ts}')],
             controllers: [path.join(__dirname, '..', 'api/**/*Controller{.js,.ts}')],
             middlewares: [path.join(__dirname, '..', 'api/**/*Middleware{.js,.ts}')],
@@ -39,6 +42,11 @@ export const env = {
         level: getOsEnv('LOG_LEVEL'),
         json: toBool(getOsEnv('LOG_JSON')),
         output: getOsEnv('LOG_OUTPUT'),
+    },
+    security: {
+        passPhrase: getOsEnv('PASS_PHRASE'),
+        ttlToken: getOsEnv('TTL_TOKEN'),
+        ttlRefresh: getOsEnv('TTL_REFRESH'),
     },
     db: {
         type: getOsEnv('DB_TYPE'),

@@ -1,6 +1,6 @@
 {
-  "name": "express-typescript-boilerplate",
-  "version": "3.0.0-rc.1",
+  "name": "stack-fondative-nodejs",
+  "version": "1.0.0",
   "description": "A delightful way to building a RESTful API with NodeJs & TypeScript",
   "main": "src/app.ts",
   "scripts": {
@@ -50,6 +50,7 @@
     "@types/helmet": "^0.0.37",
     "@types/jsonwebtoken": "^7.2.5",
     "@types/lodash": "^4.14.80",
+    "@types/mongodb": "^3.0.3",
     "@types/morgan": "^1.7.35",
     "@types/reflect-metadata": "0.0.5",
     "@types/request": "^2.0.8",
@@ -59,6 +60,7 @@
     "@types/winston": "^2.3.7",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
+    "class-transformer": "^0.1.8",
     "class-validator": "^0.7.3",
     "commander": "^2.11.0",
     "compression": "^1.7.1",
@@ -87,7 +89,7 @@
     "nps": "^5.7.1",
     "nps-utils": "^1.5.0",
     "path": "^0.12.7",
-    "reflect-metadata": "^0.1.10",
+    "reflect-metadata": "^0.1.12",
     "request": "^2.83.0",
     "routing-controllers": "^0.7.6",
     "serve-favicon": "^2.4.5",

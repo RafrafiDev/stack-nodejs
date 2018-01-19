@@ -1,6 +1,13 @@
 {
     "extends": "tslint:recommended",
     "rules": {
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore",
+            "allow-pascal-case"
+        ],
         "max-line-length": [
             true,
             160
