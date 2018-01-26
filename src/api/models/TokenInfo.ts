@@ -1,4 +1,4 @@
-import {User} from '../api/models/User';
+import {User} from './User';
 
 export class TokenInfo {
     public username: string;

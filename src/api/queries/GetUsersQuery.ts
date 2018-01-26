@@ -1,6 +1,6 @@
 import { GraphQLFieldConfig, GraphQLList } from 'graphql';
 import { Query, AbstractGraphQLQuery, GraphQLContext } from './../../lib/graphql';
-import { UserService } from '../services/UserService';
+import { UserService } from '../user/services/UserService';
 import { UserType } from './../types/UserType';
 import { User } from '../models/User';
 import { Logger, LoggerInterface } from '../../decorators/Logger';

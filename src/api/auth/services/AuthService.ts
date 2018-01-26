@@ -1,15 +1,16 @@
 import * as express from 'express';
 import { Service } from 'typedi';
-import { Logger, LoggerInterface } from '../decorators/Logger';
-import {TokenInfo} from './TokenInfo';
-import {env} from '../core/env';
+import { Logger, LoggerInterface } from '../../../decorators/Logger';
 import jwt = require('jsonwebtoken');
-import {RefreshToken} from './models/RefreshToken';
-import {User} from '../api/models/User';
-import {RefreshTokenService} from './RefreshTokenService';
-import {HttpException} from '../api/http';
-import {HttpCodes} from '../api/http';
-import {UserService} from '../api/services/UserService';
+
+import { env } from '../../../core/env';
+import { RefreshToken } from '../../models/RefreshToken';
+import { User } from '../../models/User';
+import { TokenInfo } from '../../models/TokenInfo';
+import { RefreshTokenService } from './RefreshTokenService';
+import { HttpException } from '../../http';
+import { HttpCodes } from '../../http';
+import { UserService } from '../../user/services/UserService';
 
 @Service()
 export class AuthService {

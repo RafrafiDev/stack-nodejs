@@ -16,11 +16,11 @@ import { expressLoader } from './loaders/expressLoader';
 import { winstonLoader } from './loaders/winstonLoader';
 import { typeormLoader } from './loaders/typeormLoader';
 import { swaggerLoader } from './loaders/swaggerLoader';
-// import { monitorLoader } from './loaders/monitorLoader';
-// import { homeLoader } from './loaders/homeLoader';
+import { monitorLoader } from './loaders/monitorLoader';
+import { homeLoader } from './loaders/homeLoader';
 import { publicLoader } from './loaders/publicLoader';
 import { iocLoader } from './loaders/iocLoader';
-// import { graphqlLoader } from './loaders/graphqlLoader';
+import { graphqlLoader } from './loaders/graphqlLoader';
 import { eventDispatchLoader } from './loaders/eventDispatchLoader';
 
 bootstrapMicroframework({
@@ -39,10 +39,10 @@ bootstrapMicroframework({
         typeormLoader,
         expressLoader,
         swaggerLoader,
-        // monitorLoader,
-        // homeLoader,
+        monitorLoader,
+        homeLoader,
         publicLoader,
-        // graphqlLoader,
+        graphqlLoader,
     ],
 })
     .then(() => banner(log))

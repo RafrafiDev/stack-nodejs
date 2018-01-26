@@ -1,7 +1,6 @@
 import { Container } from 'typedi';
 import { EventDispatcher as EventDispatcherClass } from 'event-dispatch';
 
-
 export function EventDispatcher(): any {
     return (object: any, propertyName: string, index?: number): any => {
         const eventDispatcher = new EventDispatcherClass();

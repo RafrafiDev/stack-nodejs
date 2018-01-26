@@ -1,6 +1,6 @@
 import * as Faker from 'faker';
 import { Factory } from '../../lib/seeds';
-import { User } from '../../../src/api/models/User';
+import { User } from '../../api/models/User';
 
 const factory = Factory.getInstance();
 

@@ -1,27 +1,26 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
-import {IsEmail, IsNotEmpty} from 'class-validator';
-import {Expose} from 'class-transformer';
-import {isArray, isNullOrUndefined} from 'util';
+import { Entity, Column, Index } from 'typeorm';
+import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Expose } from 'class-transformer';
+import { isArray } from 'util';
+import { BaseEntity } from './BaseEntity';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
 
     private static readonly ROLE_AUTHOR: string = 'ROLE_AUTHOR';
     private static readonly ROLE_SUPER_ADMIN: string = 'ROLE_SUPER_ADMIN';
 
-    @ObjectIdColumn()
-    private _id: ObjectID | string;
-
     @IsNotEmpty()
     @Column({ name: 'username' })
+    @Index({unique: true})
     private _username: string;
 
     @IsNotEmpty()
-    @Column({ name: 'first_name' })
+    @Column({ name: 'firstName' })
     private _firstName: string;
 
     @IsNotEmpty()
-    @Column({ name: 'last_name' })
+    @Column({ name: 'lastName' })
     private _lastName: string;
 
     @IsNotEmpty()
@@ -38,21 +37,6 @@ export class User {
 
     @Column({ name: 'roles' })
     private _roles: string[] = [];
-
-    @Column({ name: 'created_date' })
-    private _createdDate: Date;
-
-    @Expose()
-    get id(): ObjectID|string {
-        if (!isNullOrUndefined(this._id)) {
-            return this._id.toString();
-        }
-        return '';
-    }
-
-    set id(id: ObjectID|string) {
-        this._id = id;
-    }
 
     @Expose()
     get username(): string {
@@ -113,15 +97,6 @@ export class User {
     }
 
     @Expose()
-    get createdDate(): Date {
-        return this._createdDate;
-    }
-
-    set createdDate(value: Date) {
-        this._createdDate = value;
-    }
-
-    @Expose()
     get enabled(): boolean {
         return this._enabled;
     }
@@ -131,7 +106,7 @@ export class User {
     }
 
     constructor() {
-        this.createdDate = new Date();
+        super();
         this.addRole(User.ROLE_AUTHOR);
         this.enabled = true;
     }

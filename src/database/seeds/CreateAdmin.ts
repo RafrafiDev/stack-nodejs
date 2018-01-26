@@ -1,6 +1,5 @@
 import { SeedsInterface, FactoryInterface } from '../../lib/seeds';
-import { User } from '../../../src/api/models/User';
-
+import { User } from '../../api/models/User';
 
 export class CreateAdmin implements SeedsInterface {
 

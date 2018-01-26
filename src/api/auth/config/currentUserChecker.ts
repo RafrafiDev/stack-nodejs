@@ -1,9 +1,8 @@
-import { Action } from 'routing-controllers';
-import { User } from '../api/models/User';
-import { Logger } from '../core/Logger';
-import { TokenInfo } from './TokenInfo';
 import { Connection } from 'typeorm';
-
+import { Action } from 'routing-controllers';
+import { User } from '../../models/User';
+import { Logger } from '../../../core/Logger';
+import { TokenInfo } from '../../models/TokenInfo';
 
 export function currentUserChecker(connection: Connection): (action: Action) => Promise<User | undefined> {
     const log = new Logger(__filename);
@@ -24,7 +23,7 @@ export function currentUserChecker(connection: Connection): (action: Action) => 
             log.info('Current user is undefined');
         }
 
-        return;
+        return user;
     };
 }
 

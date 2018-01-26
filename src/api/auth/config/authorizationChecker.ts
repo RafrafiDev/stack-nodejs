@@ -1,10 +1,10 @@
 import { Action } from 'routing-controllers';
 import { Container } from 'typedi';
 import { Connection } from 'typeorm';
-import { AuthService } from './AuthService';
-import { Logger } from '../core/Logger';
+import { AuthService } from '../services/AuthService';
+import { Logger } from '../../../core/Logger';
+import { env } from '../../../core/env';
 import jwt = require('jsonwebtoken');
-import { env } from '../core/env';
 
 export function authorizationChecker(connection: Connection): (action: Action, roles: any[]) => Promise<boolean> | boolean {
     const log = new Logger(__filename);

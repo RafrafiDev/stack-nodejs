@@ -25,6 +25,9 @@
     },
     "tags": [
         {
+            "name": "Note"
+        },
+        {
             "name": "User"
         },
         {
@@ -123,7 +126,7 @@
                         "description": "User object that needs to be added to the database",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewUser"
+                            "$ref": "#/definitions/UserNew"
                         }
                     }
                 ],
@@ -175,9 +178,83 @@
                                     "type": "string"
                                 },
                                 "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/User"
+                                    "type": "object",
+                                    "properties": {
+                                        "users":{
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/User"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/me": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update connected user",
+                "description": "Updates the given user",
+                "operationId": "UpdateUser",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ok"
+                    }
+                }
+            },
+
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get connected user",
+                "description": "Returns the connected user",
+                "operationId": "FindMeUser",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/definitions/User"
+                                        }
                                     }
                                 }
                             }
@@ -221,7 +298,12 @@
                                     "type": "string"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/User"
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/definitions/User"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -254,27 +336,13 @@
                         "description": "User object that needs to be added to the database",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewUser"
+                            "$ref": "#/definitions/UserUpdate"
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "success": {
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/User"
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "ok"
                     }
                 }
             },
@@ -300,6 +368,85 @@
                     }
                 ],
                 "responses": {
+                    "204": {
+                        "description": "ok"
+                    }
+                }
+            }
+        },
+
+        "/notes": {
+            "post": {
+                "tags": [
+                    "Note"
+                ],
+                "summary": "Create new note",
+                "description": "",
+                "operationId": "CreateNote",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Note object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NoteNew"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "note": {
+                                        "type": "object",
+                                        "properties":{
+                                            "$ref": "#/definitions/Note"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Note"
+                ],
+                "summary": "List all notes",
+                "description": "Returns all notes",
+                "operationId": "FindAllNotes",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "author",
+                        "description": "Author to filter with",
+                        "schema": {
+                                "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
                     "200": {
                         "description": "ok",
                         "schema": {
@@ -310,15 +457,154 @@
                                 },
                                 "message": {
                                     "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "notes":{
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/Note"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+        },
+        "/notes/{id}": {
+            "get": {
+                "tags": [
+                    "Note"
+                ],
+                "summary": "Get note",
+                "description": "Returns the given note",
+                "operationId": "FindNote",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of note to return",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "note": {
+                                            "$ref": "#/definitions/Note"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Note"
+                ],
+                "summary": "Update note",
+                "description": "Updates the given note",
+                "operationId": "UpdateNote",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of note to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Note object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NoteNew"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ok"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Note"
+                ],
+                "summary": "Delete note",
+                "description": "Removes the given note",
+                "operationId": "DeleteNote",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of note to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ok"
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "BaseEntity": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+
         "newRefresh": {
             "type": "object",
             "properties": {
@@ -338,6 +624,7 @@
                 }
             }
         },
+
         "Credentials": {
             "type": "object",
             "properties": {
@@ -349,7 +636,22 @@
                 }
             }
         },
-        "NewUser": {
+
+        "UserUpdate": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserNew": {
             "type": "object",
             "properties": {
                 "username": {
@@ -373,22 +675,45 @@
             "title": "User",
             "allOf": [
                 {
-                    "$ref": "#/definitions/NewUser"
+                    "$ref": "#/definitions/UserNew"
+                },
+                {
+                    "$ref": "#/definitions/BaseEntity"
+                }
+            ]
+        },
+
+        "NoteNew": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "shared": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Note": {
+            "title": "Note",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/NoteNew"
+                },
+                {
+                    "$ref": "#/definitions/BaseEntity"
                 },
                 {
                     "type": "object",
                     "properties": {
-                        "id": {
-                            "type": "integer",
-                            "format": "int64"
+                        "authorId": {
+                            "type": "string"
                         },
-                        "updatedAt": {
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "createdAt": {
-                            "type": "string",
-                            "format": "date-time"
+                        "authorName": {
+                            "type": "string"
                         }
                     }
                 }

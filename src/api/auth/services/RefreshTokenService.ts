@@ -1,10 +1,9 @@
 import { Service } from 'typedi';
 import { OrmRepository } from 'typeorm-typedi-extensions';
-import { RefreshTokenRepository } from './RefreshTokenRepository';
-import { RefreshToken } from './models/RefreshToken';
-import { Logger, LoggerInterface } from '../decorators/Logger';
+import { RefreshTokenRepository } from '../repositories/RefreshTokenRepository';
+import { RefreshToken } from '../../models/RefreshToken';
+import { Logger, LoggerInterface } from '../../../decorators/Logger';
 import {ObjectID} from 'typeorm';
-
 
 @Service()
 export class RefreshTokenService {

@@ -1,9 +1,9 @@
-import {JsonController, Post, Body} from 'routing-controllers';
-import {Credentials} from '../models/Credentials';
-import {AuthService} from '../../auth/AuthService';
-import {HttpException, HttpCodes, HttpResponse} from '../http';
+import { JsonController, Post, Body } from 'routing-controllers';
+import { Credentials } from '../../models/Credentials';
+import { AuthService } from '../../auth/services/AuthService';
+import { HttpException, HttpCodes, HttpResponse } from '../../http';
 import { UserService } from '../services/UserService';
-import {User} from '../models/User';
+import { User } from '../../models/User';
 
 @JsonController()
 export class SecurityController {

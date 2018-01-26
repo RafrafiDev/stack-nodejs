@@ -1,8 +1,7 @@
 import { MicroframeworkSettings, MicroframeworkLoader } from 'microframework-w3tec';
 import { createGraphQLServer, createDataLoader } from '../lib/graphql';
 import { env } from '../core/env';
-import { UserRepository } from './../api/repositories/UserRepository';
-
+import { UserRepository } from '../api/user/repositories/UserRepository';
 
 export const graphqlLoader: MicroframeworkLoader = (settings: MicroframeworkSettings | undefined) => {
     if (settings && env.graphql.enabled) {
